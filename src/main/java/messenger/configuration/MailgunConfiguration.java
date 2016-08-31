@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 public class MailgunConfiguration {
 
     @Bean
-    MailgunApiService mailgunApiService() {
+    public MailgunApiService mailgunApiService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.mailgun.net/")
                 .build();
