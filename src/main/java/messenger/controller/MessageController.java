@@ -1,4 +1,4 @@
-package messenger.control;
+package messenger.controller;
 
 import messenger.model.Message;
 import messenger.service.MessageService;

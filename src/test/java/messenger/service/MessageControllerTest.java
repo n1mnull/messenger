@@ -2,7 +2,7 @@ package messenger.service;
 
 import io.restassured.http.ContentType;
 import messenger.Application;
-import messenger.control.MessageController;
+import messenger.controller.MessageController;
 import messenger.model.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
