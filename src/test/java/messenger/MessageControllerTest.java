@@ -1,9 +1,9 @@
 package messenger;
 
 import io.restassured.http.ContentType;
-import messenger.control.MessageControl;
+import messenger.control.MessageController;
 import messenger.model.Message;
-import messenger.service.MailService;
+import messenger.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,8 +21,8 @@ public class MessageControllerTest {
     public void send_shouldReturnStatusCode200() throws Exception {
         Message message = new Message("subject", "message text");
 
-        MailService service = mock(MailService.class);
-        MessageControl controller = new MessageControl(service);
+        MessageService service = mock(MessageService.class);
+        MessageController controller = new MessageController(service);
 
         // @formatter:off
         given()
@@ -42,8 +42,8 @@ public class MessageControllerTest {
     @Test
     public void send_shouldSendMessage() throws Exception {
         // given
-        MailService service = mock(MailService.class);
-        MessageControl controller = new MessageControl(service);
+        MessageService service = mock(MessageService.class);
+        MessageController controller = new MessageController(service);
 
         Message message = new Message("subject", "message text");
         // @formatter:off
@@ -61,15 +61,15 @@ public class MessageControllerTest {
         // @formatter:on
 
         // then
-        verify(service).sendEmail("user@email.com", 1, message);
+        verify(service).sendEmail("user@email.com", message);
     }
 
     @Test
     public void send_noEmail_shouldReturnStatusCode400() throws Exception {
         Message message = new Message("subject", "message text");
 
-        MailService service = mock(MailService.class);
-        MessageControl controller = new MessageControl(service);
+        MessageService service = mock(MessageService.class);
+        MessageController controller = new MessageController(service);
 
         // @formatter:off
         given()
