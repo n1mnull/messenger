@@ -1,9 +1,7 @@
-package messenger;
+package messenger.service;
 
 import messenger.model.Message;
 import messenger.repository.MessageRepository;
-import messenger.service.MailService;
-import messenger.service.MessageServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
