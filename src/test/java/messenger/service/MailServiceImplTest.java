@@ -43,13 +43,5 @@ public class MailServiceImplTest {
         // verify
         Mockito.verify(apiService).sendEmail(expectedAuthorization, "domain.com", "noreply@domain.com", "user@email.com", "subject",
                 "text");
-
-//        Call<ResponseBody> call = apiService.sendEmail(
-//                "Basic " + Base64.getEncoder().encodeToString("api:key-9578f9ca1c1840c6fa1eee8eae4cc539".getBytes()),
-//                "sandbox9e3e8a49584244d8a9ab4dcc9491d82f.mailgun.org",
-//                "noreply@sandbox9e3e8a49584244d8a9ab4dcc9491d82f.mailgun.org",
-//                "a.shepeliev@gmail.com", "test subject", "Hello Sasha!");
-//        Response<ResponseBody> response = call.execute();
-//        assertThat(response.code(), is(200));
     }
 }
