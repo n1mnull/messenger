@@ -1,12 +1,13 @@
 package messenger.service;
 
-import messenger.model.Message;
-import messenger.repository.MessageRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import messenger.model.Message;
+import messenger.repository.MessageRepository;
 
 import static org.mockito.Mockito.verify;
 
@@ -23,7 +24,7 @@ public class MessageServiceTest {
     private MessageServiceImpl messageService;
 
     @Test
-    public void sendMail_shouldSendMail() throws Exception {
+    public void sendMail_shouldSendMailAndSave() throws Exception {
         // given
         Message message = new Message("subject", "text");
 
@@ -33,17 +34,6 @@ public class MessageServiceTest {
 
         // then
         verify(mailService).sendEmail("noreply@domain.com", "user@email.com", "subject", "text");
-    }
-
-    @Test
-    public void saveMail_shouldSaveMailInDB() throws Exception {
-        // given
-        Message message = new Message("subject", "text");
-
-        // when
-        messageService.saveEmail(1, message);
-
-        // then
         verify(messageRepository).save(message);
     }
 }

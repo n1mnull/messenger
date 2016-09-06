@@ -21,4 +21,5 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'io.rest-assured:rest-assured:3.0.0'
     testCompile 'io.rest-assured:spring-mock-mvc:3.0.0'
+    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.3'
 }
