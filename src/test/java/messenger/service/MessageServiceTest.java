@@ -38,7 +38,7 @@ public class MessageServiceTest {
         messageService.sendEmail("1", "user@email.com", messageModel);
 
         // then
-        verify(mailService).sendEmail("noreply@domain.com", "user@email.com", "subject", "text");
+        verify(mailService).sendEmail("user@email.com", "subject", "text");
 
         ArgumentCaptor<Message> ac = ArgumentCaptor.forClass(Message.class);
         verify(messageRepository).save(ac.capture());

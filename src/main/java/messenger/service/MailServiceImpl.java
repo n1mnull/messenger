@@ -1,6 +1,6 @@
 package messenger.service;
 
-import messenger.configuration.ApplicationConfiguration;
+import messenger.configuration.MailgunConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,20 +9,20 @@ import java.util.Base64;
 @Service
 public class MailServiceImpl implements MailService {
 
-    private static final String DOMAIN = "domain.com";
-    private final ApplicationConfiguration applicationConfiguration;
+    private final MailgunConfiguration mailgunConfiguration;
     private final MailgunApiService mailgunApiService;
 
     @Autowired
-    public MailServiceImpl(ApplicationConfiguration applicationConfiguration, MailgunApiService mailgunApiService) {
-        this.applicationConfiguration = applicationConfiguration;
+    public MailServiceImpl(MailgunConfiguration mailgunConfiguration, MailgunApiService mailgunApiService) {
+        this.mailgunConfiguration = mailgunConfiguration;
         this.mailgunApiService = mailgunApiService;
     }
 
     @Override
-    public void sendEmail(String from, String to, String subject, String text) {
-        String authorization = "api:" + applicationConfiguration.getMailgunApiKey();
+    public void sendEmail(String to, String subject, String text) {
+        String authorization = "api:" + mailgunConfiguration.getMailgunApiKey();
         String basicAuthorization = "Basic " + Base64.getEncoder().encodeToString(authorization.getBytes());
-        mailgunApiService.sendEmail(basicAuthorization, DOMAIN, from, to, subject, text);
+        String from = "noreply@" + mailgunConfiguration.getMailgunDomain();
+        mailgunApiService.sendEmail(basicAuthorization, mailgunConfiguration.getMailgunDomain(), from, to, subject, text);
     }
 }

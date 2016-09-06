@@ -11,7 +11,6 @@ import java.util.Date;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    private static final String FROM_EMAIL = "noreply@domain.com";
     private final MailService mailService;
     private final MessageRepository messageRepository;
 
@@ -23,7 +22,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message sendEmail(String id, String to, MessageModel messageModel) {
-        mailService.sendEmail(FROM_EMAIL, to, messageModel.getSubject(), messageModel.getMessage());
+        mailService.sendEmail(to, messageModel.getSubject(), messageModel.getMessage());
         Message message = new Message(id, messageModel.getSubject(), messageModel.getMessage(), new Date());
         return messageRepository.save(message);
     }
