@@ -6,12 +6,14 @@ import messenger.model.MessageModel;
 import messenger.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)
@@ -77,6 +79,29 @@ public class MessageControllerTest {
                 .log().ifValidationFails()
                 .contentType(ContentType.JSON)
                 .body(message)
+        .when()
+                .post("/messages/{id}/send", 1)
+        .then()
+                .log().ifValidationFails()
+                .statusCode(400);
+        // @formatter:on
+    }
+
+    @Test
+    public void send_onDuplicateKeyId_shouldReturnStatusCode400() throws Exception {
+        MessageModel message = new MessageModel("subject", "message text");
+
+        MessageService service = mock(MessageService.class);
+        when(service.sendEmail(anyString(), anyString(), any(MessageModel.class))).thenThrow(DuplicateKeyException.class);
+        MessageController controller = new MessageController(service);
+
+        // @formatter:off
+        given()
+                .standaloneSetup(controller)
+                .log().ifValidationFails()
+                .contentType(ContentType.JSON)
+                .body(message)
+                .queryParam("email", "user@email.com")
         .when()
                 .post("/messages/{id}/send", 1)
         .then()
