@@ -1,10 +1,12 @@
 package messenger.service;
 
+import messenger.domain.Message;
+import messenger.model.MessageModel;
+import messenger.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import messenger.model.Message;
-import messenger.repository.MessageRepository;
+import java.util.Date;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -20,8 +22,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void sendEmail(String to, Message message) {
-        mailService.sendEmail(FROM_EMAIL, to, message.getSubject(), message.getMessage());
-        messageRepository.save(message);
+    public Message sendEmail(String id, String to, MessageModel messageModel) {
+        mailService.sendEmail(FROM_EMAIL, to, messageModel.getSubject(), messageModel.getMessage());
+        Message message = new Message(id, messageModel.getSubject(), messageModel.getMessage(), new Date());
+        return messageRepository.save(message);
     }
 }

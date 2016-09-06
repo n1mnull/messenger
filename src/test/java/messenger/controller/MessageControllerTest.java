@@ -2,7 +2,7 @@ package messenger.controller;
 
 import io.restassured.http.ContentType;
 import messenger.Application;
-import messenger.model.Message;
+import messenger.model.MessageModel;
 import messenger.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class MessageControllerTest {
 
     @Test
     public void send_shouldReturnStatusCode200() throws Exception {
-        Message message = new Message("subject", "message text");
+        MessageModel message = new MessageModel("subject", "message text");
 
         MessageService service = mock(MessageService.class);
         MessageController controller = new MessageController(service);
@@ -45,7 +45,7 @@ public class MessageControllerTest {
         MessageService service = mock(MessageService.class);
         MessageController controller = new MessageController(service);
 
-        Message message = new Message("subject", "message text");
+        MessageModel message = new MessageModel("subject", "message text");
         // @formatter:off
         given()
                 .standaloneSetup(controller)
@@ -61,12 +61,12 @@ public class MessageControllerTest {
         // @formatter:on
 
         // then
-        verify(service).sendEmail("user@email.com", message);
+        verify(service).sendEmail("1", "user@email.com", message);
     }
 
     @Test
     public void send_noEmail_shouldReturnStatusCode400() throws Exception {
-        Message message = new Message("subject", "message text");
+        MessageModel message = new MessageModel("subject", "message text");
 
         MessageService service = mock(MessageService.class);
         MessageController controller = new MessageController(service);

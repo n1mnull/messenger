@@ -1,8 +1,9 @@
 package messenger.service;
 
-import messenger.model.Message;
+import messenger.domain.Message;
+import messenger.model.MessageModel;
 
 public interface MessageService {
 
-    void sendEmail(String to, Message message);
+    Message sendEmail(String id, String to, MessageModel message);
 }

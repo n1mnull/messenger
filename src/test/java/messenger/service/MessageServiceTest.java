@@ -1,14 +1,19 @@
 package messenger.service;
 
+import messenger.domain.Message;
+import messenger.model.MessageModel;
+import messenger.repository.MessageRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import messenger.model.Message;
-import messenger.repository.MessageRepository;
+import java.util.Date;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,14 +31,18 @@ public class MessageServiceTest {
     @Test
     public void sendMail_shouldSendMailAndSave() throws Exception {
         // given
-        Message message = new Message("subject", "text");
-
+        MessageModel messageModel = new MessageModel("subject", "text");
+        Date now = new Date();
 
         // when
-        messageService.sendEmail("user@email.com", message);
+        messageService.sendEmail("1", "user@email.com", messageModel);
 
         // then
         verify(mailService).sendEmail("noreply@domain.com", "user@email.com", "subject", "text");
-        verify(messageRepository).save(message);
+
+        ArgumentCaptor<Message> ac = ArgumentCaptor.forClass(Message.class);
+        verify(messageRepository).save(ac.capture());
+        Message message = ac.getValue();
+        assertThat(message.getTime().getTime(), greaterThan(now.getTime()));
     }
 }

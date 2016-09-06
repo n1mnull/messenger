@@ -1,6 +1,7 @@
 package messenger.controller;
 
-import messenger.model.Message;
+import messenger.domain.Message;
+import messenger.model.MessageModel;
 import messenger.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,9 @@ public class MessageController {
     }
 
     @RequestMapping(value = "{id}/send", method = RequestMethod.POST)
-    public void send(@RequestBody Message message,
-                     @RequestParam("email") String email,
-                     @PathVariable("id") int id) {
-        messageService.sendEmail(email, message);
+    public Message send(@RequestBody MessageModel message,
+                        @RequestParam("email") String email,
+                        @PathVariable("id") String id) {
+        return messageService.sendEmail(id, email, message);
     }
 }

@@ -2,15 +2,15 @@ package messenger.model;
 
 import java.util.Objects;
 
-public class Message {
+public class MessageModel {
 
     private String subject;
     private String message;
 
-    public Message() {
+    public MessageModel() {
     }
 
-    public Message(String subject, String message) {
+    public MessageModel(String subject, String message) {
         this.subject = subject;
         this.message = message;
     }
@@ -33,10 +33,10 @@ public class Message {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Message)) {
+        if (!(o instanceof MessageModel)) {
             return false;
         }
-        Message message1 = (Message) o;
+        MessageModel message1 = (MessageModel) o;
         return Objects.equals(subject, message1.subject) &&
                Objects.equals(message, message1.message);
     }
